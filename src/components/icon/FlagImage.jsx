@@ -8,9 +8,11 @@ const FlagImage = ({ country, size = 'md' }) => {
         lg: 70,
     };
 
+    const pixelSize = sizes[size];
+
     return (
         <div>
-            <Image src={`/Images/${country}.jpg`} alt={country} width={50} height={50} />
+            <Image src={`/Images/${country}.jpg`} alt={country} width={pixelSize} height={pixelSize} />
         </div>
     );
 };

@@ -12,14 +12,9 @@ const Homepage = () => {
     return (
         <div id="wrap" className="bg-gray-300 px-5">
             <Header />
-            <Button>확인</Button>
-            <Button bg="gray">취소</Button>
+
             <main className="inner flex flex-col gap-10">
-                <div className="flex gap-4">
-                    <button>확인</button>
-                    <Button>확인</Button>
-                    <Button> 취소</Button>
-                </div>
+                <div className="flex gap-4"></div>
                 <MiniStateGrid stateData={stateData} />
                 <div className="flex flex-col gap-4 lg:flex-row">
                     <div className="grow">
@@ -31,6 +26,11 @@ const Homepage = () => {
 
                         <div className="bg-green-200 grow">g</div>
                     </div>
+                </div>
+
+                <div>
+                    <Button>확인</Button>
+                    <Button gray>취소</Button>
                 </div>
             </main>
 
