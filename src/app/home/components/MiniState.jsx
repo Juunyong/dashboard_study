@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import FlagImage from '@/components/icon/FlagImage';
 
-const MiniState = ({ name, value, startContent, endContent }) => {
+const MiniState = ({ name, value, startContent, endContent, growth }) => {
     return (
         <Card>
             <div className="flex items-center  gap-5">
@@ -14,12 +14,15 @@ const MiniState = ({ name, value, startContent, endContent }) => {
                 <div>
                     <span className="text-sm text-primary-70 ">{name}</span>
                     <strong className="block text-lg">{value}</strong>
-                </div>
-                <div className="flex. gap=2">
-                    <span className="secondary text-sm"></span>
+                    {growth && (
+                        <div className="flex. gap=2">
+                            <span className="text-secondary text-sm">{growth}</span>
+                            <span className="text-gray-500 text-sm">Since last month</span>
+                        </div>
+                    )}
                 </div>
                 {/*국기 */}
-                <div className="rounded-full ml-auto w-[50px] h-[50px]">{endContent}</div>
+                {endContent && <div className="rounded-full ml-auto w-[50px] h-[50px]">{endContent}</div>}
             </div>
         </Card>
     );
