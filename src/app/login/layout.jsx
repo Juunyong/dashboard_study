@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../../components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
-const AboutLayout = ({ children }) => {
+const LoginLayout = ({ children }) => {
     return (
         <div id="wrap">
             <Header />
@@ -12,4 +12,4 @@ const AboutLayout = ({ children }) => {
     );
 };
 
-export default AboutLayout;
+export default LoginLayout;

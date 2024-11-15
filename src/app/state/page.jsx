@@ -37,9 +37,15 @@ const StatePage = () => {
 
     const [selected, setSelected] = useState(0);
 
+    const handleChange = () => {
+        setText();
+    };
+
+    const [text, setText] = useState('HI');
     return (
         <div className="py-30">
-            <input type="text" placeholder="하이요" className="bg-blue-200" />
+            <input type="text" placeholder="아무거나 " value={text} onChange={handleChange} className="bg-blue-200" />
+            <p>{text}</p>
             <hr />
             <div className="flex gap-5 justify-center0">
                 {sortArr.map((item, index) => (
