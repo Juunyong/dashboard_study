@@ -38,7 +38,9 @@ const StatePage = () => {
     const [selected, setSelected] = useState(0);
 
     return (
-        <div>
+        <div className="py-30">
+            <input type="text" placeholder="하이요" className="bg-blue-200" />
+            <hr />
             <div className="flex gap-5 justify-center0">
                 {sortArr.map((item, index) => (
                     <button
