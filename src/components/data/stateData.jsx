@@ -1,5 +1,5 @@
-const { default: FlagImage } = require('@/components/icon/FlagImage');
-const { BsBinoculars, BsBackpack2, BsAirplaneEnginesFill, BsBarChartFill } = require('react-icons/bs');
+import { BsAirplaneEnginesFill, BsBackpack2, BsBarChartFill, BsBinoculars } from 'react-icons/bs';
+import FlagImage from '../icon/FlagImage';
 
 export const stateData = [
     {
