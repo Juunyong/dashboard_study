@@ -1,82 +1,89 @@
 'use client';
-import classNames from 'classnames';
-import React, { useState } from 'react';
-import { FaBars } from 'react-icons/fa6';
-import { IoClose } from 'react-icons/io5';
 
-const samplePage = () => {
-    const [num, setNum] = useState(0);
-    const [name, setName] = useState('winter');
-    const [isOpen, setIsOpen] = useState(false);
-    const [text, setText] = useState('');
+import axios from 'axios';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
-    const menuArr = [{ value: 'menu1' }, { value: 'menu2' }, { value: 'menu3' }];
+const NewsPage = () => {
+    const [news, setNews] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
 
-    const [tab, setTab] = useState(0);
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                const response = await axios.get(
+                    'https://content.guardianapis.com/search?api-key=cb5c8f1d-41e3-4481-b13e-7b075cf3e537&show-fields=thumbnail,headline,byline,bodyText'
+                );
+                // 전체 카테고리
+                const results = response.data.response.results;
+                console.log(results);
+                setNews(results);
+
+                // 카테고리 추출
+                const categorySet = [
+                    ...new Set(
+                        results.map((item) => {
+                            return item.sectionId;
+                        })
+                    ),
+                ];
+                setCategories(categorySet);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchNews();
+    }, []);
+
     return (
         <div>
-            <div>
-                {menuArr.map((item, index) => (
+            <h2>뉴스</h2>
+            {/* 카테코리 */}
+            <div className="flex gap-4 px-5">
+                <button
+                    onClick={() => {
+                        setSelectedCategory('');
+                    }}
+                >
+                    전체
+                </button>
+                {/* [카테고리명, 카테고리명] */}
+                {categories.map((item) => (
                     <button
-                        key={index}
+                        key={item}
                         onClick={() => {
-                            setTab(index);
+                            setSelectedCategory(item);
                         }}
-                        className={classNames(tab === index ? 'bg-blue-200' : '')}
                     >
-                        {item.value}
+                        {item}
                     </button>
                 ))}
             </div>
-            <div>
-                {tab === 0 && <div>메뉴 1 컨텐츠 </div>}
-                {tab === 1 && <div>메뉴 2 컨텐츠 </div>}
-                {tab === 2 && <div>메뉴 3 컨텐츠 </div>}
-            </div>
-            <input
-                type="text"
-                value={text}
-                className="bg-blue-500 mx-10 my-3"
-                onChange={(e) => {
-                    setText(e.target.value);
-                }}
-            />
-            <div>{text}</div>
-            <button
-                onClick={() => {
-                    setIsOpen(!isOpen);
-                }}
-            >
-                {isOpen ? <IoClose /> : <FaBars />}
-            </button>
-            <div>{num}</div>
-            <button
-                onClick={() => {
-                    setNum(num + 1);
-                }}
-            >
-                +
-            </button>
-            <button
-                onClick={() => {
-                    setNum(num - 1);
-                }}
-            >
-                -
-            </button>
-            <h2>usestate를 사용해 winter - fall</h2>
-
-            <strong>{name}</strong>
-            <hr />
-            <button
-                onClick={() => {
-                    setName(name === 'winter' ? 'fall' : 'winter');
-                }}
-            >
-                change name
-            </button>
+            {/* 뉴스 리스트 */}
+            <ul className="divide-y px-5">
+                {news.map((item) => (
+                    <li key={item.id}>
+                        <Link href={item.webUrl} className="py-3 flex gap-4">
+                            <Image
+                                src={item.fields.thumbnail}
+                                alt={item.webTitle}
+                                width={300}
+                                height={200}
+                                className="object-cover rounded w-1/3"
+                            />
+                            <div className="flex-1 flex flex-col justify-between">
+                                <strong>{item.webTitle}</strong>
+                                <p className="text-gray-500 text-sm mt-2">{item.webPublicationDate}</p>
+                            </div>
+                        </Link>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
 
-export default samplePage;
+export default NewsPage;
