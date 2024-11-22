@@ -2,48 +2,106 @@
 import React, { useEffect, useState } from 'react';
 import { ConstantColorFactor } from 'three';
 
-const [count, setCount] = useState(0);
-
-const EffectPagee = () => {
-    const [color, setColor] = useState('lightblue');
-};
-
 const EffectPage = () => {
-    useEffect(() => {
-        console.log('hi;');
-        document.body.style.backgroundcColor = ' Lightblue';
-    });
-
-    useEffect(() => [console.log('update plz')]);
+    const [color, setColor] = useState('lightblue');
 
     useEffect(() => {
         console.log('마운트시에만 실행');
+        document.body.style.backgroundColor = 'blue';
+
+        return () => {
+            document.body.style.backgroundColor = ' ';
+        };
     }, []);
 
+    useEffect(() => {
+        console.log('업데이트시에만 실행');
+
+        document.body.style.backgroundColor = color;
+    }, [color]);
+
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        console.log('2 - 마운트시에만 실행');
+    }, []);
+
+    useEffect(() => {
+        console.log('2 - 마운트시와 업데이트시에 실행');
+    });
+
+    useEffect(() => {
+        console.log('2 - 업데이트 시');
+        return () => {
+            console.log('2 - 언마운트시에만 실행');
+        };
+    }, [count]);
+
+    const [timer, setTimer] = useState(0);
+    const [isShow, setIsShow] = useState(true);
+
+    useEffect(() => {
+        let interval;
+
+        // setInterval을 사용하여 1초마다 timer 상태값을 변경
+        if (isShow) {
+            interval = setInterval(() => {
+                setTimer((prev) => prev + 1);
+            }, 1000);
+        }
+        return () => {
+            clearInterval(interval);
+            setTimer(0);
+        };
+    }, [isShow]);
+
     return (
-        //
-        <div>
+        <>
+            {' '}
+            <div>
+                {isShow ? (
+                    <>
+                        <strong>{timer}초</strong>
+                        <button
+                            onClick={() => {
+                                setIsShow(false);
+                            }}
+                        >
+                            hide timer
+                        </button>
+                    </>
+                ) : (
+                    <button
+                        onClick={() => {
+                            setIsShow(true);
+                        }}
+                    >
+                        show timer
+                    </button>
+                )}
+            </div>
             <div>
                 <p>Count: {count}</p>
                 <button
                     onClick={() => {
-                        setCount(count++);
+                        setCount(count + 1);
                     }}
                 >
-                    r그냥증가
+                    증가
                 </button>
             </div>
-            <h1>EffectPage</h1>
-            <button
-                onClick={() => {
-                    setColor('yellow');
-                }}
-                className="bg-red-200"
-            >
-                color Change
-            </button>
-        </div>
+            <div>
+                <h1>EffectPage</h1>
+                <button
+                    onClick={() => {
+                        setColor('green');
+                    }}
+                    className="bg-red-200 p-3"
+                >
+                    색상변경
+                </button>
+            </div>
+        </>
     );
 };
-
 export default EffectPage;
