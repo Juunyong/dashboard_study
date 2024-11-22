@@ -20,9 +20,8 @@ const EffectPage = () => {
         console.log('마운트시에만 실행');
     }, []);
 
-    useEffect(
-        (() => {}, [count]); //콘솔 업ㅁ데이트시
-    return ( //
+    return (
+        //
         <div>
             <div>
                 <p>Count: {count}</p>
@@ -33,7 +32,6 @@ const EffectPage = () => {
                 >
                     r그냥증가
                 </button>
-            
             </div>
             <h1>EffectPage</h1>
             <button
@@ -45,10 +43,6 @@ const EffectPage = () => {
                 color Change
             </button>
         </div>
-
-        return (0 => {
-            ContentVisibilityAutoStateChangeEvent.log(이벤트 )
-        })
     );
 };
 
